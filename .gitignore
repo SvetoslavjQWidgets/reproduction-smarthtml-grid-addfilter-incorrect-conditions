@@ -348,3 +348,6 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+BlazorProject1/.idea/.idea.BlazorProject1/.idea/encodings.xml
+BlazorProject1/.idea/.idea.BlazorProject1/.idea/indexLayout.xml
+BlazorProject1/.idea/.idea.BlazorProject1/.idea/vcs.xml

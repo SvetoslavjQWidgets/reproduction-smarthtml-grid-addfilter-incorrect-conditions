@@ -1,0 +1,63 @@
+﻿@page "/"
+
+@using Smart.Blazor
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?"/>
+
+<Button OnClick="@ClearFilters">clear filters</Button>
+<Button OnClick="@OrClicked">contains Andrew or contains Nancy</Button>
+<Button OnClick="@AndClicked">contains Andrew and contains Nancy</Button>
+
+
+
+<Grid @ref="grid" DataSource="@data" Filtering="@GridFiltering" Header="@GridHeader">
+  <Columns>
+    <Column DataField="Id" Visible="false" AllowEdit="false"/>
+    <Column DataField="Name" Label="Name" AllowEdit="true"/>
+    <Column DataField="Value" Label="Name" AllowEdit="true"/>
+    <Column DataField="Description" Label="Name" AllowEdit="true"/>
+    <Column DataField="BoolValue " Label="BoolValue" AllowEdit="true" DataType="boolean" Editor="@checkBoxEditor" Template="@checkBoxEditor"/>
+  </Columns>
+</Grid>
+
+
+@code
+{
+  Grid grid;
+  GridHeader GridHeader = new() { Visible = true, Buttons = new[] { "filter", "sort", "group", "search" } };
+  GridFiltering GridFiltering = new() { Enabled = true };
+  string checkBoxEditor = "checkBox";
+
+  List<ClassName> data = new List<ClassName>()
+  {
+    new ClassName() { Id = Guid.NewGuid(), BoolValue = false, Name = "Andrew", Value = "value1", Description = "lorem ipsum1" },
+    new ClassName() { Id = Guid.NewGuid(), BoolValue = false, Name = "test2", Value = "value2", Description = "lorem ipsum2" },
+    new ClassName() { Id = Guid.NewGuid(), BoolValue = false, Name = "test3", Value = "value3", Description = "lorem ipsum3" },
+    new ClassName() { Id = Guid.NewGuid(), BoolValue = false, Name = "Nancy", Value = "value4", Description = "lorem ipsum4" },
+    new ClassName() { Id = Guid.NewGuid(), BoolValue = true, Name = "test5", Value = "value5", Description = "lorem ipsum5" },
+    new ClassName() { Id = Guid.NewGuid(), BoolValue = true, Name = "test6", Value = "value6", Description = "lorem ipsum6" },
+    new ClassName() { Id = Guid.NewGuid(), BoolValue = true, Name = "Andrew Nancy", Value = "value7", Description = "lorem ipsum7" }
+  };
+
+  
+  public async void ClearFilters()
+  {
+    grid.ClearFilter();
+  }
+  
+  public async void OrClicked()
+  {
+    grid.AddFilter(nameof(ClassName.Name), $"contains Andrew or contains Nancy");
+  }
+  
+  public async void AndClicked()
+  {
+    grid.AddFilter(nameof(ClassName.Name), $"contains Andrew and contains Nancy");
+  }
+}
